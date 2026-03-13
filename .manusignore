@@ -1,0 +1,31 @@
+# 1. โฟลเดอร์ Library (ห้ามให้ AI อ่านเด็ดขาด กิน Credit มหาศาล)
+node_modules/
+dist/
+build/
+.next/
+
+# 2. ไฟล์ Media และ Asset ขนาดใหญ่ (AI อ่านโค้ด ไม่ได้อ่านรูป)
+public/assets/
+*.jpg
+*.jpeg
+*.png
+*.gif
+*.svg
+*.mp4
+*.pdf
+
+# 3. ไฟล์ Config ของระบบหรือ Git
+.git/
+.env
+.manusignore
+package-lock.json
+yarn.lock
+
+# 4. โฟลเดอร์ Backup หรือ Log
+logs/
+*.log
+tmp/
+
+# 5. โฟลเดอร์ CSS/JS ที่เราทำเสร็จแล้วและไม่อยากให้ AI เข้าไปยุ่ง
+# เช่น ถ้าคุณแก้แค่ logic แต่ไม่ได้แก้สไตล์ ก็ปิด CSS ไปก่อน
+# css/ 
