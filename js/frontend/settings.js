@@ -8,11 +8,15 @@ onAuthStateChanged(auth, async (user) => {
         window.location.href = './login.html';
         return;
     }
+    
+    // Setup signOut function
     window._signOut = () => import('https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js')
         .then(m => m.signOut(auth));
 
-    const displayName = user.displayName || user.email.split('@')[0] || 'User';
-    const initial     = displayName.charAt(0).toUpperCase();
+    // Get display name with proper fallback (using ?? per SKILL.md)
+    const email = user.email ?? 'user';
+    const displayName = user.displayName ?? email.split('@')[0] ?? 'User';
+    const initial = displayName.charAt(0).toUpperCase();
 
     // Navbar
     const set = (id, v) => { const el = document.getElementById(id); if (el) el.textContent = v; };

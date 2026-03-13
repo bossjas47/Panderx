@@ -103,19 +103,19 @@
         <div class="settings-section mb-3">
             <div class="settings-section-label text-xs font-bold text-slate-400 uppercase tracking-widest px-1 mb-2">การแจ้งเตือน</div>
             <div class="settings-card">
-                <div class="settings-row" onclick="void(0)">
+                <div class="settings-row settings-row-notif">
                     <div class="settings-row-icon amber"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/></svg></div>
                     <div class="flex-1"><div class="settings-row-label">การแจ้งเตือนคำสั่งซื้อ</div><div class="settings-row-desc">แจ้งเมื่อมีการอัปเดตสถานะ</div></div>
-                    <label class="toggle" onclick="event.stopPropagation()">
-                        <input type="checkbox" id="notifOrders" checked onchange="saveNotifPref()">
+                    <label class="toggle">
+                        <input type="checkbox" id="notifOrders" checked>
                         <span class="toggle-slider"></span>
                     </label>
                 </div>
-                <div class="settings-row" onclick="void(0)">
+                <div class="settings-row settings-row-notif">
                     <div class="settings-row-icon sky"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z"/></svg></div>
                     <div class="flex-1"><div class="settings-row-label">โปรโมชั่นและข่าวสาร</div><div class="settings-row-desc">รับข้อเสนอและอัปเดตใหม่</div></div>
-                    <label class="toggle" onclick="event.stopPropagation()">
-                        <input type="checkbox" id="notifPromo" onchange="saveNotifPref()">
+                    <label class="toggle">
+                        <input type="checkbox" id="notifPromo">
                         <span class="toggle-slider"></span>
                     </label>
                 </div>
@@ -137,29 +137,16 @@
         <!-- Danger zone -->
         <div class="settings-section">
             <div class="settings-card">
-                <div class="settings-row" onclick="handleLogout()">
+                <div class="settings-row settings-row-logout">
                     <div class="settings-row-icon red"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/></svg></div>
-                    <div class="flex-1"><div class="settings-row-label" style="color:#dc2626;">ออกจากระบบ</div><div class="settings-row-desc">สิ้นสุดเซสชันปัจจุบัน</div></div>
+                    <div class="flex-1"><div class="settings-row-label settings-row-label-danger">ออกจากระบบ</div><div class="settings-row-desc">สิ้นสุดเซสชันปัจจุบัน</div></div>
                 </div>
             </div>
         </div>
     </main>
 
-    <script>
-        function toggleSidebar(e){if(e)e.stopPropagation();var d=document.getElementById('sidebarDrawer'),o=document.getElementById('sidebarOverlay'),b=document.getElementById('hamburgerBtn'),open=d.classList.toggle('open');o.classList.toggle('open',open);b.classList.toggle('active',open);b.setAttribute('aria-expanded',open);document.body.style.overflow=open?'hidden':'';}
-        function closeSidebar(){['sidebarDrawer','sidebarOverlay'].forEach(function(id){document.getElementById(id)?.classList.remove('open');});var b=document.getElementById('hamburgerBtn');if(b){b.classList.remove('active');b.setAttribute('aria-expanded','false');}document.body.style.overflow='';}
-        function toggleDropdown(e){if(e)e.stopPropagation();var d=document.getElementById('profileDropdown'),a=document.getElementById('dropdownArrow'),open=d.classList.toggle('active');if(a)a.style.transform=open?'rotate(180deg)':'rotate(0deg)';}
-        document.addEventListener('keydown',function(e){if(e.key==='Escape'){closeSidebar();document.getElementById('profileDropdown')?.classList.remove('active');}});
-        document.addEventListener('click',function(e){var d=document.getElementById('profileDropdown');if(d?.classList.contains('active')&&!d.contains(e.target)&&!document.getElementById('profileTrigger')?.contains(e.target)){d.classList.remove('active');}});
-        window.goToLogin=function(){window.location.href='./login.html';};
-        window.goToRegister=function(){window.location.href='./register.html';};
-        window.showToast=function(msg,type){var c=document.getElementById('toastContainer');if(!c)return;var t=document.createElement('div');t.className='toast '+(type||'info');var ic={success:'✓',error:'✕',info:'ℹ',warning:'⚠'},col={success:'#10b981',error:'#ef4444',info:'#38bdf8',warning:'#f59e0b'};t.style.borderLeftColor=col[type]||col.info;t.innerHTML='<span style="color:'+(col[type]||col.info)+';font-weight:bold;font-size:1.1rem;">'+(ic[type]||'ℹ')+'</span><span style="color:#1e293b;font-weight:500;">'+msg+'</span>';c.appendChild(t);requestAnimationFrame(function(){t.classList.add('show');});setTimeout(function(){t.classList.remove('show');setTimeout(function(){t.remove();},400);},3000);};
-        window.handleLogout=async function(){try{if(window._signOut)await window._signOut();showToast('ออกจากระบบแล้ว','success');setTimeout(function(){window.location.href='./index.html';},700);}catch(e){showToast('เกิดข้อผิดพลาด','error');}};
-        window.promptChangePassword=function(){window.location.href='./profile.html#changepass';};
-        window.saveNotifPref=function(){var prefs={orders:document.getElementById('notifOrders')?.checked,promo:document.getElementById('notifPromo')?.checked};localStorage.setItem('px_notif',JSON.stringify(prefs));showToast('บันทึกการตั้งค่าแล้ว','success');};
-        // Load saved prefs
-        try{var p=JSON.parse(localStorage.getItem('px_notif')||'{}');if(p.orders!==undefined)document.getElementById('notifOrders').checked=p.orders;if(p.promo!==undefined)document.getElementById('notifPromo').checked=p.promo;}catch(e){}
-    </script>
+
+    <script src="js/frontend/settings-ui.js"></script>
     <script type="module" src="js/frontend/settings.js"></script>
 </body>
 </html>
