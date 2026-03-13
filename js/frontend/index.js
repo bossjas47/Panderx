@@ -242,21 +242,21 @@ async function loadProducts() {
         }
 
         let html = '';
-        snap.forEach(doc => {
+        snap.forEach((doc, index) => {
             const p = doc.data();
             const name = escapeHtml(p.name || 'ไม่มีชื่อ');
             const price = Number(p.price || 0).toLocaleString('th-TH');
             const img = p.imageUrl ? escapeHtml(p.imageUrl) : null;
             
             html += `
-                <div class="bg-white p-3 rounded-xl border border-slate-200 hover:shadow-md transition-all cursor-pointer" onclick="window.location.href='./homerent.html'">
+                <div class="bg-white p-3 rounded-xl border border-slate-200 hover:shadow-md transition-all cursor-pointer" data-product-index="${index}">
                     <div class="aspect-video rounded-lg bg-gradient-to-br from-sky-100 to-purple-100 mb-3 overflow-hidden">
                         ${img ? `<img src="${img}" class="w-full h-full object-cover" loading="lazy" onerror="this.style.display='none'">` : ''}
                     </div>
                     <h3 class="font-semibold text-slate-800 text-sm mb-1 line-clamp-2">${name}</h3>
                     <div class="flex justify-between items-center">
                         <span class="text-sky-600 font-bold text-sm">${price} ฿</span>
-                        <button class="bg-gradient-to-r from-sky-400 to-indigo-400 text-white text-xs px-3 py-1.5 rounded-full" onclick="event.stopPropagation(); window.location.href='./homerent.html'">
+                        <button class="bg-gradient-to-r from-sky-400 to-indigo-400 text-white text-xs px-3 py-1.5 rounded-full product-rent-btn">
                             เช่า
                         </button>
                     </div>
@@ -265,6 +265,20 @@ async function loadProducts() {
         });
         
         grid.innerHTML = html;
+        
+        // Add event listeners instead of inline onclick
+        grid.querySelectorAll('[data-product-index]').forEach(card => {
+            card.addEventListener('click', (e) => {
+                if (!e.target.closest('.product-rent-btn')) {
+                    window.location.href = './homerent.html';
+                }
+            });
+            
+            card.querySelector('.product-rent-btn')?.addEventListener('click', (e) => {
+                e.stopPropagation();
+                window.location.href = './homerent.html';
+            });
+        });
     } catch (err) {
         console.error('Products error:', err);
         grid.innerHTML = '<p class="text-slate-400 text-center col-span-full py-8">ไม่สามารถโหลดสินค้าได้</p>';

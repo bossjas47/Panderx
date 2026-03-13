@@ -254,7 +254,7 @@ import {
     getDashboardStats,
     subscribeOrders 
 } from './firebase-config.js';
-import { getDocs, onSnapshot } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+import { getDocs, onSnapshot, orderBy, where } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
 
 async function loadAdminStats() {
     try {
